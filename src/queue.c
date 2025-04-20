@@ -9,8 +9,10 @@ int empty(struct queue_t * q) {
 
 void enqueue(struct queue_t * q, struct pcb_t * proc) {
         /* TODO: put a new process to queue [q] */
-        int size=q->size;
-        q->proc[size]=proc;
+        if(q->size==MAX_QUEUE_SIZE){
+                return;
+        }
+        q->proc[q->size]=proc;
         q->size++; 
 }
 

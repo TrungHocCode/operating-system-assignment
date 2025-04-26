@@ -14,19 +14,21 @@ void enqueue(struct queue_t * q, struct pcb_t * proc) {
         q->size++; 
 }
 
+
 struct pcb_t * dequeue(struct queue_t * q) {
-        /* TODO: return a pcb whose prioprity is the highest
-         * in the queue [q] and remember to remove it from q
-         * */
-        if(q->size==0){
-                return NULL;
+        if (q->size == 0) {
+            return NULL;
         }
-        struct pcb_t * proc=q->proc[0];
-        int size=q->size;
-	for (int i=size;i>0;i--){
-                q->proc[i-1]=q->proc[i];
+        int idx = 0; 
+        for (int i = 1; i < q->size; i++) {
+            if (q->proc[i]->priority > q->proc[idx]->priority) {
+                idx = i;
+            }
+        }
+        struct pcb_t * proc = q->proc[idx];
+        for (int i = idx; i < q->size - 1; i++) {
+            q->proc[i] = q->proc[i + 1];
         }
         q->size--;
         return proc;
-
-}
+    }
